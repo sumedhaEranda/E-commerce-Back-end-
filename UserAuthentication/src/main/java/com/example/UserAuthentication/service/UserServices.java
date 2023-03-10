@@ -45,19 +45,47 @@ public class UserServices {
         if (usernameEntry.isPresent()) {
 
             User UpdateUser = userRepository.findByUserName(username).get();
-            if(UpdateUser!=null)
-            {
+            if (UpdateUser != null) {
                 String update_encryptedPwd = passwordEncoder.encode(user.getPassword());
                 UpdateUser.setUserName(user.getUserName());
                 UpdateUser.setPassword(update_encryptedPwd);
                 UpdateUser.setRoles(user.getRoles());
                 userRepository.save(UpdateUser);
             }
-        }
-        else {
+        } else {
             throw new AlreadyExistsException("User is Not found!");
         }
         return user;
+    }
+
+    //GET ALL USER Details according to username
+    public User GetUserDetails(String username) {
+
+        Optional<User> getuserdetails = userRepository.findByUserName(username);
+
+        if (getuserdetails.isPresent()) {
+
+            return getuserdetails.get();
+        } else {
+            throw new AlreadyExistsException("User is Not found!");
+        }
+    }
+
+
+    //Delete User according to username
+    public User DeleteUserDetailsById(String username) {
+        boolean AvableStatus = userRepository.findByUserName(username).isPresent();
+
+        if (AvableStatus) {
+            User getuserdetails = userRepository.findByUserName(username).get();
+
+            if (getuserdetails != null) {
+                userRepository.deleteById(getuserdetails.getId());
+            }
+            return getuserdetails;
+        } else {
+            throw new AlreadyExistsException("User is Not found!");
+        }
     }
 
 

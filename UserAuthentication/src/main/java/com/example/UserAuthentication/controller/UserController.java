@@ -29,6 +29,23 @@ public class UserController {
           return new ResponseEntity<User>(Currntuser,HttpStatus.OK);
     }
 
+    //Update User Details
+    @GetMapping("/findById/{username}")
+
+    public ResponseEntity<User>GetUserDetails(@PathVariable("username") String username)  {
+        User getUserDetails=  userServices.GetUserDetails(username);
+        return new ResponseEntity<>(getUserDetails,HttpStatus.OK);
+    }
+
+
+    //Update User Details
+    @DeleteMapping("/findById/{username}")
+
+    public ResponseEntity<User>DeleteUserDetailsByID(@PathVariable("username") String username)  {
+       User deletDetails=  userServices.DeleteUserDetailsById(username);
+        return  new ResponseEntity<>(deletDetails,HttpStatus.OK);
+    }
+
 
 
     @ExceptionHandler
