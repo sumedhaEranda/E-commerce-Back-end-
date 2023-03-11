@@ -21,6 +21,8 @@ public class UserServices {
 
 
     //CREATE NEW USER WITH USER ROLE
+
+    //
     public String createUser(User user) throws AlreadyExistsException {
 
         //Checking the Already username Exit
