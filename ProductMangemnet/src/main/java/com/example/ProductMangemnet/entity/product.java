@@ -19,9 +19,9 @@ public class product {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String title;
-    private String price;
+    private float price;
     private String imgpath;
-
     private String category;
 
+    private String description;
 }
