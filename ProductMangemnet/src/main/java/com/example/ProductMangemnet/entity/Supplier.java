@@ -6,21 +6,24 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Product_tb")
-public class product {
+@Table(name = "Supplier_tb")
+public class Supplier {
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
-    private String title;
-    private float price;
-    private String imgpath;
-    private String category;
+    private int supplier_id;
+    private String supplier_name;
+    private String supplier_address;
 
-    private String description;
+
 }
