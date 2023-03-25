@@ -1,4 +1,5 @@
 package com.example.UserAuthentication.controller;
+import com.example.UserAuthentication.Dto.UserLoginRequest;
 import com.example.UserAuthentication.entity.User;
 import com.example.UserAuthentication.exception.AlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.UserAuthentication.service.UserServices;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/api/v1/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -17,8 +21,8 @@ public class UserController {
     //Create new User
     @PostMapping("/create")
     public ResponseEntity<User>CreateUser(@RequestBody User user)  {
-            userServices.createUser(user);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        User createdUser= userServices.createUser(user);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     //Update User Details
@@ -29,7 +33,7 @@ public class UserController {
           return new ResponseEntity<User>(Currntuser,HttpStatus.OK);
     }
 
-    //Update User Details
+    //Get all User Details
     @GetMapping("/findById/{username}")
 
     public ResponseEntity<User>GetUserDetails(@PathVariable("username") String username)  {
@@ -38,7 +42,7 @@ public class UserController {
     }
 
 
-    //Update User Details
+    //Delete User Details
     @DeleteMapping("/findById/{username}")
 
     public ResponseEntity<User>DeleteUserDetailsByID(@PathVariable("username") String username)  {
@@ -46,7 +50,19 @@ public class UserController {
         return  new ResponseEntity<>(deletDetails,HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody UserLoginRequest loginRequest) {
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+        // Retrieve user information from database or user authentication provider
+        User user = userServices.userlogin(email,password);
+         if(user!=null){
+             return new  ResponseEntity<>(user,HttpStatus.OK);
+         }else {
 
+             return  new ResponseEntity<>(null,HttpStatus.UNAUTHORIZED);
+         }
+    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)

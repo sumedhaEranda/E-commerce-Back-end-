@@ -19,6 +19,7 @@ public class User {
     private int id;
     private String userName;
     private String password;
+    private String email;
     private boolean active;
     private String roles;//ROLE_USER,ROLE_ADMIN
 }

@@ -5,9 +5,12 @@ import com.example.UserAuthentication.entity.User;
 import com.example.UserAuthentication.exception.AlreadyExistsException;
 import com.example.UserAuthentication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -21,9 +24,7 @@ public class UserServices {
 
 
     //CREATE NEW USER WITH USER ROLE
-
-    //
-    public String createUser(User user) throws AlreadyExistsException {
+    public User createUser(User user) throws AlreadyExistsException {
 
         //Checking the Already username Exit
         Optional<User> usernameEntry = userRepository.findByUserName(user.getUserName());
@@ -35,7 +36,7 @@ public class UserServices {
             String encryptedPwd = passwordEncoder.encode(user.getPassword());
             user.setPassword(encryptedPwd);
             userRepository.save(user);
-            return "User saved";
+            return user;
         }
     }
 
@@ -91,4 +92,22 @@ public class UserServices {
     }
 
 
+    public User userlogin(String email, String password) {
+
+        Optional<User> loguser = null;
+        try {
+            loguser = userRepository.findByEmail(email);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        User user = loguser.get();
+        boolean isPasswordMatched = passwordEncoder.matches(password, user.getPassword());
+        if (loguser != null && isPasswordMatched) {
+
+            return user;
+        } else {
+            return null;
+        }
+    }
 }
