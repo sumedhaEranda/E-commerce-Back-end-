@@ -41,18 +41,19 @@ public class UserServices {
     }
 
     //CHANGE USER Details according to username
-    public User changeUserDetails(String username, User user) {
+    public User changeUserDetails(String email, User user) {
 
         //Checking the Available username
-        Optional<User> usernameEntry = userRepository.findByUserName(username);
+        Optional<User> usernameEntry = userRepository.findByUserName(email);
         if (usernameEntry.isPresent()) {
 
-            User UpdateUser = userRepository.findByUserName(username).get();
+            User UpdateUser = userRepository.findByUserName(email).get();
             if (UpdateUser != null) {
                 String update_encryptedPwd = passwordEncoder.encode(user.getPassword());
                 UpdateUser.setUserName(user.getUserName());
                 UpdateUser.setPassword(update_encryptedPwd);
                 UpdateUser.setRoles(user.getRoles());
+                UpdateUser.setActive(user.isActive());
                 userRepository.save(UpdateUser);
             }
         } else {

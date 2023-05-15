@@ -26,15 +26,16 @@ public class UserController {
     }
 
     //Update User Details
-    @PutMapping("/update/{username}")
+    @PutMapping("/update/{email}")
 
-    public ResponseEntity<User>ChangeUserDetails(@PathVariable("username") String username, @RequestBody User user)  {
-      User Currntuser=  userServices.changeUserDetails(username,user);
+    public ResponseEntity<User>ChangeUserDetails(@PathVariable("email") String email, @RequestBody User user)  {
+      User Currntuser=  userServices.changeUserDetails(email,user);
           return new ResponseEntity<User>(Currntuser,HttpStatus.OK);
     }
 
+
     //Get all User Details
-    @GetMapping("/findById/{username}")
+    @GetMapping("/findById/{email}")
 
     public ResponseEntity<User>GetUserDetails(@PathVariable("username") String username)  {
         User getUserDetails=  userServices.GetUserDetails(username);

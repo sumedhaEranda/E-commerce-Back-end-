@@ -1,26 +1,34 @@
 package com.example.ProductMangemnet.controller;
 
-import com.example.ProductMangemnet.entity.product;
+import com.example.ProductMangemnet.entity.Product;
 import com.example.ProductMangemnet.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:3000")
-@RestController
 @RequestMapping("/api/v1/product")
+@RestController
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    ProductService productService;
+
+
     // Get All products
     @GetMapping("/all")
-    public List<product> getAllNotes()
+    public List<Product> getAllNotes()
     {
         return productService.GetAllProducts();
+    }
+
+    @PostMapping("/AddProduct")
+    public ResponseEntity<Product> postBody(@RequestBody Product product) {
+
+        Product prodt=  productService.saveProductData(product);
+        return ResponseEntity.ok(prodt);
     }
 
 }

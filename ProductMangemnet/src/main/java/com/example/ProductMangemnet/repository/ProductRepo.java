@@ -1,9 +1,10 @@
 package com.example.ProductMangemnet.repository;
 
-import com.example.ProductMangemnet.entity.Category;
+
+import com.example.ProductMangemnet.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category,Integer> {
+public interface ProductRepo extends JpaRepository<Product,Integer> {
 }

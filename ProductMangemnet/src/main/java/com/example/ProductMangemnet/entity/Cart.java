@@ -7,26 +7,27 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "products_tb")
-public class Product implements Serializable {
+@Table(name = "cart_tb")
+public class Cart implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     private int pid;
-    private String title;
-    private float price;
-    private String imgpath;
-    private String category;
 
-    private String description;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private Customer user;
 
 
+
+    @Column(nullable = false)
+    private int quantity;
 }
