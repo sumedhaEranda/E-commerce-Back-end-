@@ -22,4 +22,8 @@ public class ProductService {
 
         return product;
     }
+
+    public boolean checkProductNameExists(String productName) {
+        return productRepo.existsByTitle(productName);
+    }
 }

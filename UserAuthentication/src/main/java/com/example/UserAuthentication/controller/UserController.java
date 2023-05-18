@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import com.example.UserAuthentication.service.UserServices;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -35,6 +36,16 @@ public class UserController {
 
 
     //Get all User Details
+    //Get all User Details
+    @GetMapping("/getAllMember")
+
+    public ResponseEntity<List<User>>GetUserDetails()  {
+
+        return new ResponseEntity<>(userServices.GetTeamsDetails(),HttpStatus.OK);
+    }
+
+
+
     @GetMapping("/findById/{email}")
 
     public ResponseEntity<User>GetUserDetails(@PathVariable("username") String username)  {

@@ -1,5 +1,6 @@
 package com.example.ProductMangemnet.controller;
 
+import com.example.ProductMangemnet.dto.GetInvoiceResponce;
 import com.example.ProductMangemnet.dto.OrderDTO;
 import com.example.ProductMangemnet.dto.ResponseOrderDTO;
 import com.example.ProductMangemnet.entity.Customer;
@@ -10,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Random;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 @RestController
 public class OrderController {
@@ -66,8 +68,13 @@ public class OrderController {
         ResponseOrderDTO responseOrderDTO = new ResponseOrderDTO();
         Customer customer = new Customer(orderDTO.getEmail(), orderDTO.getName(),orderDTO.getContactNo(),orderDTO.getCity(),orderDTO.getAddress());
         customerService.isCustomerPresent(customer);
-        Order order = new Order(customer, orderDTO.getCartItems());
+        Order order = new Order(customer, orderDTO.getCartItems(),orderDTO.getTotalAmount());
         orderService.saveOrder(order);
         return ResponseEntity.ok(responseOrderDTO);
+    }
+
+    @GetMapping(value = "/getAllOrder")
+    public List<GetInvoiceResponce> getOrdersWithCustomerDetails() {
+        return orderService.getCustomersWithAddresses();
     }
 }

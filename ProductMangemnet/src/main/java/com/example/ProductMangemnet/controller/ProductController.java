@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/product")
 @RestController
 public class ProductController {
@@ -29,6 +29,12 @@ public class ProductController {
 
         Product prodt=  productService.saveProductData(product);
         return ResponseEntity.ok(prodt);
+    }
+
+    @GetMapping("/check/{title}")
+    public ResponseEntity<?> checkProductNameAvailability(@PathVariable("title") String productName) {
+        boolean exists = productService.checkProductNameExists(productName);
+        return ResponseEntity.ok().body(exists);
     }
 
 }

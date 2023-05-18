@@ -20,6 +20,8 @@ public class User {
     private String userName;
     private String password;
     private String email;
+
+    private String ContactNo;
     private boolean active;
     private String roles;//ROLE_USER,ROLE_ADMIN
 }

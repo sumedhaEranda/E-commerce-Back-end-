@@ -1,11 +1,15 @@
 package com.example.ProductMangemnet.entity;
 
+import com.example.ProductMangemnet.dto.OrderDTO;
 import lombok.AllArgsConstructor;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 @AllArgsConstructor
 @Getter
@@ -17,6 +21,8 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
 
+
+
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Customer_id",referencedColumnName = "id")
     private Customer customer;
@@ -25,7 +31,11 @@ public class Order implements Serializable {
     @JoinColumn(name="order_id",referencedColumnName = "id")
     private List<Cart> CartItems;
 
-    public Order(Customer customer, List<Cart> cartItems) {
+    private float totalAmount;
+
+    private Date createOrderDate = new java.sql.Date(new java.util.Date().getTime());
+    public Order(Customer customer, List<Cart> cartItems,float totalAmount) {
+        this.totalAmount=totalAmount;
         this.customer = customer;
         CartItems = cartItems;
     }

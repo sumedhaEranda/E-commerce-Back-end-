@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -28,16 +29,41 @@ public class UserServices {
 
         //Checking the Already username Exit
         Optional<User> usernameEntry = userRepository.findByUserName(user.getUserName());
-        if (usernameEntry.isPresent()) {
+        String acceslevel=user.getRoles();
+        if(acceslevel==null){
+            if (usernameEntry.isPresent()) {
+                throw new AlreadyExistsException("Username already exists!");
+            }else {
+                user.setRoles(UserConstant.DEFAULT_ROLE);
+            }
+        }
+        else
+        {
+            if (usernameEntry.isPresent()) {
             throw new AlreadyExistsException("Username already exists!");
-        } else {
-            user.setRoles(UserConstant.DEFAULT_ROLE);
+             }
+            else{
+                if(acceslevel.equals("admin"))
+                {
+                    user.setRoles(UserConstant.ADMIN_ACCESS);
+                }
+                if(acceslevel.equals("moderator"))
+                {
+                    user.setRoles(UserConstant.MODERATOR_ACCESS);
+                }
+                if(acceslevel.equals("user")) {
+                    user.setRoles(UserConstant.DEFAULT_ROLE);
+                }
+            }
+        }
+
+
             //encrypted the password for user
             String encryptedPwd = passwordEncoder.encode(user.getPassword());
             user.setPassword(encryptedPwd);
             userRepository.save(user);
             return user;
-        }
+
     }
 
     //CHANGE USER Details according to username
@@ -109,6 +135,18 @@ public class UserServices {
             return user;
         } else {
             return null;
+        }
+    }
+
+    public List<User> GetTeamsDetails() {
+
+         List<User> user=userRepository.findAll();
+
+        if (user.isEmpty()) {
+            throw new AlreadyExistsException("User is Not found!");
+
+        } else {
+            return user;
         }
     }
 }
