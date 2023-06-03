@@ -1,11 +1,9 @@
 package com.example.ProductMangemnet.repository;
 
-
-import com.example.ProductMangemnet.dto.GetInvoiceResponce;
-import com.example.ProductMangemnet.dto.OrderDTO;
 import com.example.ProductMangemnet.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,6 +15,30 @@ public interface OrderRepo extends JpaRepository<Order,Integer> {
             "FROM Order invoice " +
             "INNER JOIN invoice.customer c")
     List<Object[]> getCustomersWithAddresses();
+
+
+    @Query("SELECT p.category, c.quantity, p.title " +
+            "FROM Product p " +
+            "INNER JOIN Cart c ON p.pid = c.pid")
+    List<Object[]> getSalesOrderforCategory();
+
+
+//    @Query("SELECT p.category, SUM(c.quantity) AS total_quantity, FUNCTION('DATE_FORMAT', po.createOrderDate, '%M') AS order_month " +
+//            "FROM Product p " +
+//            "INNER JOIN Cart c ON p.pid = c.product.pid " +
+//            "INNER JOIN PlaceOrder po ON c.order.id = po.id " +
+//            "GROUP BY p.category, order_month " +
+//            "ORDER BY p.category")
+//    List<Object[]> getHHNMHMJHMJHNM();
+
+
+    @Query("SELECT p.pid, p.category,p.title, p.imgpath, p.price, c.quantity,o.totalAmount " +
+            "FROM Cart c " +
+            "INNER JOIN Order o ON c.order_id = o.id " +
+            "INNER JOIN Product p ON c.pid = p.pid " +
+            "WHERE c.order_id = :id")
+    List<Object[]> getOrderId(@Param("id") Integer orderId);
+
 }
 
 

@@ -1,8 +1,6 @@
 package com.example.ProductMangemnet.controller;
 
-import com.example.ProductMangemnet.dto.GetInvoiceResponce;
-import com.example.ProductMangemnet.dto.OrderDTO;
-import com.example.ProductMangemnet.dto.ResponseOrderDTO;
+import com.example.ProductMangemnet.dto.*;
 import com.example.ProductMangemnet.entity.Customer;
 import com.example.ProductMangemnet.entity.Order;
 import com.example.ProductMangemnet.service.CustomerService;
@@ -54,12 +52,22 @@ public class OrderController {
 //    }
 
 
-    @GetMapping(value = "/getOrder/{orderId}")
-    public ResponseEntity<Order> getOrderDetails(@PathVariable int orderId) {
+//    @GetMapping(value = "/getOrder/{orderId}")
+//    public ResponseEntity<Order> getOrderDetails(@PathVariable int orderId) {
+//
+//        Order order = orderService.getOrderDetail(orderId);
+//        return ResponseEntity.ok(order);
+//    }
 
-        Order order = orderService.getOrderDetail(orderId);
-        return ResponseEntity.ok(order);
+
+    @GetMapping(value = "/getOrder/{orderId}")
+    public ResponseEntity<List<RespoceOrderDetails>> getOrderDetails(@PathVariable int orderId) {
+
+        List<RespoceOrderDetails> orderDetail = orderService.getOrderDetail(orderId);
+        return ResponseEntity.ok(orderDetail);
     }
+
+
 
 
     @PostMapping("/placeOrder")
@@ -69,12 +77,18 @@ public class OrderController {
         Customer customer = new Customer(orderDTO.getEmail(), orderDTO.getName(),orderDTO.getContactNo(),orderDTO.getCity(),orderDTO.getAddress());
         customerService.isCustomerPresent(customer);
         Order order = new Order(customer, orderDTO.getCartItems(),orderDTO.getTotalAmount());
-        orderService.saveOrder(order);
+        int orderId= orderService.saveOrder(order);
+        responseOrderDTO.setOrderId(orderId);
         return ResponseEntity.ok(responseOrderDTO);
     }
 
     @GetMapping(value = "/getAllOrder")
     public List<GetInvoiceResponce> getOrdersWithCustomerDetails() {
         return orderService.getCustomersWithAddresses();
+    }
+
+    @GetMapping(value = "/getAllSalesOrderforCategory")
+    public List<GetSalesOrder> getAllSalesOrdersforCategory() {
+        return orderService.getAllSalesOrderforCategory();
     }
 }

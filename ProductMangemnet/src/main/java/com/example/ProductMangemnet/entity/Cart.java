@@ -18,13 +18,14 @@ public class Cart implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
 
     private int pid;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private Customer user;
+
+    @Column(name = "order_id")
+    private int  order_id;
 
 
 

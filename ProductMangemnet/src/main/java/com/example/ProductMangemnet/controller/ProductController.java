@@ -1,5 +1,6 @@
 package com.example.ProductMangemnet.controller;
 
+import com.example.ProductMangemnet.dto.GetCategoryItems;
 import com.example.ProductMangemnet.entity.Product;
 import com.example.ProductMangemnet.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class ProductController {
     public ResponseEntity<?> checkProductNameAvailability(@PathVariable("title") String productName) {
         boolean exists = productService.checkProductNameExists(productName);
         return ResponseEntity.ok().body(exists);
+    }
+
+    @GetMapping(value = "/getCategoryItems")
+    public List<GetCategoryItems> getOrdersWithCustomerDetails() {
+        return productService.getCategoryItems();
     }
 
 }
