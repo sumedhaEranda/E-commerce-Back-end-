@@ -91,4 +91,11 @@ public class OrderController {
     public List<GetSalesOrder> getAllSalesOrdersforCategory() {
         return orderService.getAllSalesOrderforCategory();
     }
+
+    @DeleteMapping(value = "/deleteOrder/{orderId}")
+    public Integer deleyeorder(@PathVariable int orderId)
+    {
+
+        return orderService.deleteOrderByIdDetail(orderId);
+    }
 }

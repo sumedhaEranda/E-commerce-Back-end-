@@ -23,7 +23,7 @@ public class Order implements Serializable {
 
 
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Customer_id",referencedColumnName = "id")
     private Customer customer;
 

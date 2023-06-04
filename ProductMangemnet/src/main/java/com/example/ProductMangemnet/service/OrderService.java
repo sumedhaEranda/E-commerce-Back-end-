@@ -119,4 +119,15 @@ public class OrderService {
 
     }
 
+    public int deleteOrderByIdDetail(int orderId) {
+
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isPresent()) {
+            orderRepository.deleteById(orderId);
+        } else {
+
+        }
+        return orderId;
+    }
+
 }

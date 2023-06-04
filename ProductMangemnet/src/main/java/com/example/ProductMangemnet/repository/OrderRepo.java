@@ -39,6 +39,14 @@ public interface OrderRepo extends JpaRepository<Order,Integer> {
             "WHERE c.order_id = :id")
     List<Object[]> getOrderId(@Param("id") Integer orderId);
 
+
+//    @Query("DELETE FROM Order po " +"Cart c"+"customer cu"+
+//            "JOIN Cart c ON po.id = c.order_id " +
+//            "JOIN customer cu ON po.customer_id = cu.id " +
+//            "WHERE po.id = :id")
+//    Integer deleteOrderId(@Param("oid") Integer orderId);
+
+
 }
 
 
