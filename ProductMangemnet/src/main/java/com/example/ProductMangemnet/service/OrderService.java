@@ -71,7 +71,6 @@ public class OrderService {
         }
         return customersWithAddresses;
     }
-
     public List<GetSalesOrder> getAllSalesOrderforCategory() {
         List<Object[]> queryResult = orderRepository.getSalesOrderforCategory();
 
@@ -119,6 +118,8 @@ public class OrderService {
 
     }
 
+
+
     public int deleteOrderByIdDetail(int orderId) {
 
         Optional<Order> order = orderRepository.findById(orderId);
@@ -129,5 +130,7 @@ public class OrderService {
         }
         return orderId;
     }
+
+
 
 }

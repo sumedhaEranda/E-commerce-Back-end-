@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<spring-cloud.version>Hoxton.SR9</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -41,6 +42,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.12.159</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -58,7 +64,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>sk-company-product-service-docker</finalName>
 	</build>
 
 </project>

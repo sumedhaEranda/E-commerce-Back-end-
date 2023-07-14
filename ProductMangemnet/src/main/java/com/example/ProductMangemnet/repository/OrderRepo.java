@@ -17,9 +17,16 @@ public interface OrderRepo extends JpaRepository<Order,Integer> {
     List<Object[]> getCustomersWithAddresses();
 
 
-    @Query("SELECT p.category, c.quantity, p.title " +
-            "FROM Product p " +
-            "INNER JOIN Cart c ON p.pid = c.pid")
+//    @Query("SELECT p.category, c.quantity, p.title " +
+//            "FROM Product p " +
+//            "INNER JOIN Cart c ON p.pid = c.pid")
+//    List<Object[]> getSalesOrderforCategory();
+
+        @Query("SELECT MONTHNAME(po.createOrderDate) AS month, p.category, SUM(c.quantity) AS totalSales " +
+                "FROM Product p " +
+                "INNER JOIN Cart c ON p.pid = c.pid " +
+                "INNER JOIN Order po ON c.order_id = po.id " +
+                "GROUP BY p.category, MONTH(po.createOrderDate)")
     List<Object[]> getSalesOrderforCategory();
 
 
