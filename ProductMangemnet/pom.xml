@@ -58,6 +58,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>sk-company-product-service-docker</finalName>
 	</build>
 
 </project>
