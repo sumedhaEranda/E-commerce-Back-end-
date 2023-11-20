@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://sk-company-db.cx9efcaggooj.us-east-1.rds.amazonaws.com:3306/sk_company_db
+    username: admin
+    password: sumeada96
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAQHNT5REVY6Z4OTEK
+      secret-key: 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
+    region:
+      static: us-east-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: sk-company-bucket
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+server:
+  port: 8081

@@ -1,0 +1,30 @@
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sk_company_db
+    username: root
+    password: ""
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  application:
+    name: User AuthenticateServer(sk-Company)
+server:
+  port: 8080
+
+
+  eureka:
+    instance:
+      prefer-ip-address: true
+
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+        defaultZone: http://localhost:8785/eureka

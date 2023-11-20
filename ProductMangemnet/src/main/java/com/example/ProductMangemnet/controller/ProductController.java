@@ -20,7 +20,6 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-
     // Get All products
     @GetMapping("/all")
     public List<Product> getAllNotes()
@@ -38,9 +37,6 @@ public class ProductController {
         Product prodt=  productService.saveProductData(product,image);
         return ResponseEntity.ok(prodt);
     }
-
-
-
 
     @GetMapping("/check/{title}")
     public ResponseEntity<?> checkProductNameAvailability(@PathVariable("title") String productName) {
